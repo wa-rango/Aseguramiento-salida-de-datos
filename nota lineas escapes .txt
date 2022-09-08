@@ -1,0 +1,65 @@
+ESCAPE CORRECTO DE LA SALIDA DE DATOS
+
+<?php
+/*
+Plugin Name: Mi primer plugin
+Plugin URI: Http// Mi primer plugin.com
+Description: Este es mi primer plugin que va cambiar los titulos de cada entrada de un blog o categoria
+Version: 1.0
+Author: Alejandro Arango
+Author URI: Http://miurlpersonal.com
+License: GPL2
+License URI:  https://www.gnu.org/license/gpl-2.0.html
+Text Domain: miprimerplugin
+Domain Patch: /languages
+*/
+if( ! function_exists('mp_install') ) {
+    function mp_install(){
+    //Accion a ejecutar
+//    require_once 'activador.php';
+    }
+}
+
+if( ! class_exists('MP_Mi_Class') ) {
+    class  MP_Mi_Class {
+        
+    }
+}
+
+function mp_deactivation() {
+    // Accion a ejecutar
+    flush_rewrite_rules();
+}
+
+function mp_desinstall() {
+    // Borrar Tablas en la base de datos
+    // Quitar alguna configuraciones
+    // u Opciones 
+}
+
+if( ! isset ( $mivariable ) ) {
+   $mivariable = 'nuevo valor';
+}
+
+register_activation_hook( __FILE__, 'mp_install' );
+register_deactivation_hook( __FILE__, 'mp_deactivation' );
+
+$output = "<a href='".  esc_url('file://google.com.co',[ 'file', 'otro']). "' Title='Google now' >Google</a>";
+
+$html_permitidos = [
+    'a' => [
+        'href'=> [],
+        'title'=> [],
+    ],
+    'p'=> [],
+    'h3'=> [],
+    'strong'=> [],
+];
+
+$protocolos = [
+    'file'
+];
+    
+echo wp_kses( $output, $html_permitidos , $protocolos );
+
+echo wp_kses_post( $content);
